@@ -1,75 +1,932 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hamin</title>
+    <title>HAMIN - Education Excellence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .container {
-            border: 2px solid black;
-            height: 917px;
-            width: 412px;
-            background-color: rgb(248, 249, 249);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0a0a0a;
+            --secondary: #ffffff;
+            --accent: #d97706;
+            --accent-light: #f59e0b;
+            --accent-gold: #d97706;
+            --gray-light: #f8f9fa;
+            --gray-dark: #374151;
+            --text-primary: #0a0a0a;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --primary: #f8f9fa;
+                --secondary: #0a0a0a;
+                --accent: #f59e0b;
+                --accent-light: #fbbf24;
+                --gray-light: #1f2937;
+                --gray-dark: #9ca3af;
+                --text-primary: #f8f9fa;
+                --text-secondary: #9ca3af;
+                --border-color: #374151;
+                color-scheme: dark;
+            }
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--text-primary);
+            background: var(--secondary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: var(--secondary);
+            border-bottom: 2px solid var(--accent);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .logo:hover .logo-icon {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+        }
+
+        .logo-icon svg {
+            width: 30px;
+            height: 30px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            line-height: 1;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-tagline {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.55rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: var(--accent);
+            color: var(--secondary);
+            padding: 0.75rem 1.75rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--gray-dark) 100%);
+            color: var(--secondary);
+            padding: 5rem 2rem;
+            text-align: center;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin-bottom: 1.2rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 650px;
+            margin: 0 auto 2.5rem;
+            color: #d5d5d5;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--secondary);
+            padding: 1.1rem 2.2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.05rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--secondary);
+            padding: 1.1rem 2.2rem;
+            border: 2px solid var(--secondary);
+            border-radius: 6px;
+            font-size: 1.05rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--secondary);
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3.5rem;
+            color: var(--text-primary);
+            position: relative;
+            padding-bottom: 1.2rem;
+            letter-spacing: -0.03em;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: var(--accent);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3.5rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent);
+            margin-bottom: 1.2rem;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .about-text p {
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 320px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            font-size: 5rem;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+        }
+
+        /* Features Section */
+        .features {
+            background: var(--gray-light);
+            padding: 5rem 2rem;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .feature-card {
+            background: var(--secondary);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid var(--accent);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1.2rem;
+        }
+
+        .feature-card h3 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 0.8rem;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* Institutions Section */
+        .institutions {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .inst-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .inst-card {
+            text-align: center;
+            padding: 2.5rem;
+            border-radius: 12px;
+            background: var(--gray-light);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .inst-card:hover {
+            background: var(--accent);
+            color: var(--secondary);
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        .inst-card h3 {
+            font-family: 'Playfair Display', serif;
+            margin: 1.2rem 0;
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .inst-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .inst-card:hover p {
+            color: var(--secondary);
+        }
+
+        .inst-icon {
+            font-size: 3.5rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--primary);
+            color: var(--secondary);
+            padding: 5rem 2rem;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-title {
+            color: var(--secondary);
+            text-align: center;
+        }
+
+        .contact-title::after {
+            background: var(--accent);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .contact-item-icon {
+            color: var(--accent);
+            font-size: 1.8rem;
+            min-width: 35px;
+        }
+
+        .contact-item h4 {
+            margin-bottom: 0.4rem;
+            color: var(--secondary);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+        }
+
+        .contact-item p {
+            color: #b5b5b5;
+            font-size: 1rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--gray-light);
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .submit-btn {
+            background: var(--accent);
+            color: var(--secondary);
+            padding: 1.1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.05rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: #000000;
+            color: var(--secondary);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            border-top: 2px solid var(--accent);
+        }
+
+        footer p {
+            margin-bottom: 0.6rem;
+            font-size: 0.95rem;
+        }
+
+        .footer-links {
             display: flex;
             justify-content: center;
-            text-align: center;
-            padding-top: 200px;
-
+            gap: 2.5rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
         }
 
-        #form {
-            border: 1px solid black;
-            border-radius: 5px;
-            width: 250px;
-            height: 200px;
-            box-shadow: 4px 4px 4px grey;
-            padding-top: 30px;
-            background-color:darkcyan;
-
-
-        }
-
-        #name {
-            color: rgb(135, 193, 241);
-        }
-
-        #number {
-            color: rgb(135, 193, 241);
-        }
-
-        a {
-            border: 1px solid black;
-            padding: 6px;
+        .footer-links a {
+            color: var(--accent);
             text-decoration: none;
-            color: black;
-            border-radius: 40px;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                max-width: 320px;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .logo-title {
+                font-size: 1.4rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 0.8rem;
+                width: 100%;
+                text-align: center;
+            }
+
+            .hero {
+                padding: 3rem 1rem;
+                min-height: auto;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .about,
+            .features,
+            .institutions,
+            .contact {
+                padding: 3rem 1rem;
+            }
         }
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <form id="form" action="">
-            <label for="text">Name :</label>
-            <br>
-            <input type="text" placeholder="Enter your name" id="name">
-            <br>
-            <br>
-            <label for="number">Phone Number :</label>
-            <br>
-            <input type="number" placeholder="Enter your Number" id="number">
-            <br>
-            <br>
-            <a href="home.html" target="_blank" id="next">Next</a>
-        </form>
-    </div>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="#home" class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 10v20M8 20h8M16 10v20" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M28 10h-4v20h4c3.31 0 6-2.69 6-6v-8c0-3.31-2.69-6-6-6z" fill="white" opacity="0.9"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <div class="logo-title">HAMIN</div>
+                    <div class="logo-tagline">Education</div>
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#institutions">Institutions</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="cta-button">Get Started</button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>Welcome to HAMIN</h1>
+        <p>Excellence in Education - Schools, Colleges & Universities United</p>
+        <div class="hero-buttons">
+            <button class="btn-primary">Explore Programs</button>
+            <button class="btn-secondary">Learn More</button>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2 class="section-title">About HAMIN</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Building Future Leaders</h3>
+                <p>HAMIN is a comprehensive educational platform dedicated to nurturing excellence across all levels of education. From schools to colleges and universities, we provide world-class educational infrastructure and resources.</p>
+                <p>Our mission is to empower students with knowledge, skills, and values that prepare them for success in the modern world. We believe in holistic education that combines academic excellence with character development.</p>
+                <p>With a commitment to innovation and quality, HAMIN stands as a beacon of educational excellence in the region.</p>
+            </div>
+            <div class="about-image">
+                🎓
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="features-container">
+            <h2 class="section-title">Our Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Quality Education</h3>
+                    <p>Comprehensive curriculum designed to meet international standards and prepare students for global challenges.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👨‍🏫</div>
+                    <h3>Expert Faculty</h3>
+                    <p>Highly qualified and experienced educators dedicated to student success and personal growth.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏫</div>
+                    <h3>Modern Facilities</h3>
+                    <p>State-of-the-art infrastructure including labs, libraries, sports facilities, and digital learning centers.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Digital Learning</h3>
+                    <p>Online and hybrid learning options to make education accessible and flexible for all students.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Excellence & Awards</h3>
+                    <p>Consistently recognized for academic excellence, innovation, and student achievements.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Community Support</h3>
+                    <p>Strong support system with mentorship, counseling, and career guidance for holistic development.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Institutions Section -->
+    <section class="institutions" id="institutions">
+        <h2 class="section-title">Our Institutions</h2>
+        <div class="inst-grid">
+            <div class="inst-card">
+                <div class="inst-icon">🏫</div>
+                <h3>Primary School</h3>
+                <p>Foundation building with focus on basic skills, creativity, and social development for grades 1-5.</p>
+            </div>
+            <div class="inst-card">
+                <div class="inst-icon">📖</div>
+                <h3>Secondary School</h3>
+                <p>Comprehensive education with specialized streams for science, commerce, and arts for grades 6-10.</p>
+            </div>
+            <div class="inst-card">
+                <div class="inst-icon">🎯</div>
+                <h3>Higher Secondary</h3>
+                <p>Advanced curriculum preparing students for competitive exams and higher education pursuits.</p>
+            </div>
+            <div class="inst-card">
+                <div class="inst-icon">🏛️</div>
+                <h3>College</h3>
+                <p>Undergraduate and postgraduate programs with industry-relevant courses and research opportunities.</p>
+            </div>
+            <div class="inst-card">
+                <div class="inst-icon">🎓</div>
+                <h3>University</h3>
+                <p>Advanced degree programs, research centers, and professional development for academic excellence.</p>
+            </div>
+            <div class="inst-card">
+                <div class="inst-icon">💻</div>
+                <h3>Tech Institute</h3>
+                <p>Specialized training in emerging technologies, IT, and digital innovation for modern careers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <h2 class="section-title contact-title">Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-item-icon">📍</div>
+                        <div>
+                            <h4>Address</h4>
+                            <p>123 Education Lane, Knowledge City, State 12345</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-item-icon">📞</div>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-item-icon">✉️</div>
+                        <div>
+                            <h4>Email</h4>
+                            <p>info@hamin.edu</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-item-icon">🕐</div>
+                        <div>
+                            <h4>Hours</h4>
+                            <p>Mon - Fri: 8:00 AM - 6:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 HAMIN - Education Excellence. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#features">Features</a>
+            <a href="#institutions">Institutions</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <p>Building the Future Through Quality Education</p>
+    </footer>
+
     <script>
-        let button = document.getElementById("next");
-        button.addEventListener("click", function () {
-            alert("Welcome to HAMIN");
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            if (name && email && subject && message) {
+                alert(`Thank you, ${name}! Your message has been received. We will contact you soon at ${email}.`);
+                this.reset();
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.feature-card, .inst-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Get Started button
+        document.querySelector('.cta-button').addEventListener('click', function () {
+            document.getElementById('institutions').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Explore Programs button
+        document.querySelector('.btn-primary').addEventListener('click', function () {
+            document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Learn More button
+        document.querySelector('.btn-secondary').addEventListener('click', function () {
+            document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
         });
     </script>
 </body>
-
 </html>
